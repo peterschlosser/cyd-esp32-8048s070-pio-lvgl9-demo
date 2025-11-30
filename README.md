@@ -1,4 +1,4 @@
-# cyd-esp32-8048s070-pio-lvgl9-demo
+﻿# cyd-esp32-8048s070-pio-lvgl9-demo
 A simplified PlatformIO project to dispel some of the mystery in setting up the LvGL 9 Widgets Demo for use with larger CYD displays.
 
 ## CYD ESP32-8048S070 + PlatformIO + LvGL 9 Widgets Demo
@@ -19,9 +19,7 @@ A simplified PlatformIO project to dispel some of the mystery in setting up the 
 	- LvGL 9.4.0
 	- LovyanGFX 1.2.7
 
-[TOC]
-
-##Setup Procedure
+## Setup Procedure
 
 ### 1. Prepare Workstation Software
 
@@ -114,11 +112,13 @@ copy-rename to: `lib/lv_conf.h`
 2. enable its content by setting the first `#if` to `1`
 
 	```cpp
-	#if 1 /*Set it to "1" to enable content*/```
+	#if 1 /*Set it to "1" to enable content*/
+	```
 
 3. optional: increase the `LV_MEM_SIZE` to 1MB as future projects will use up the buffer at its default size:
 	```cpp
-	#define LV_MEM_SIZE (1024U * 1024U)```
+	#define LV_MEM_SIZE (1024U * 1024U)
+	```
 
 4. change the type of memory from which buffers are allocated to PSRAM:
 	```cpp
@@ -127,7 +127,8 @@ copy-rename to: `lib/lv_conf.h`
 		#undef LV_MEM_POOL_ALLOC
 		#define LV_MEM_POOL_INCLUDE     "esp_heap_caps.h"
 		#define LV_MEM_POOL_ALLOC(size) heap_caps_malloc(size, MALLOC_CAP_SPIRAM)
-	#endif```
+	#endif
+	```
 
 5. optional: enable the logging of messages in case something goes wrong
 	optional: enable system monitoring
@@ -137,7 +138,8 @@ copy-rename to: `lib/lv_conf.h`
 	#define LV_USE_LOG 1
 	#define LV_USE_SYSMON 1
 	#define LV_USE_PERF_MONITOR 1
-	#define LV_USE_MEM_MONITOR 1```
+	#define LV_USE_MEM_MONITOR 1
+	```
 
 ### 5. Enable and Test Serial Logging
 
@@ -155,7 +157,8 @@ modify the `main.cpp` file in the following ways:
 	void loop()
 	{
 		// put your main code here, to run repeatedly:
-	}```
+	}
+	```
 
 2. modify `setup()` to prepare the `Serial` interface to write log messages:
 	```cpp
@@ -169,25 +172,28 @@ modify the `main.cpp` file in the following ways:
 			delay(100);
 		}
 		ESP_LOGI(TAG, "setup started.");
-	}```
+	}
+	```
 
 3. **Test Serial Logging.** compile and upload the firmware to our device.  open the PlatformIO Serial Monitor and observe the "setup started" message.  this is a good place to resolve any USB connection issues with our device, and any compiler or build errors.  on success, our serial monitor may look something like:
-		--- Terminal on COM7 | 115200 8-N-1
-		--- Available filters and text transformations: colorize, debug, default, direct, esp32_exception_decoder, hexlify, log2file, nocontrol, printable, send_on_enter, time
-		--- More details at https://bit.ly/pio-monitor-filters
-		--- Quit: Ctrl+C | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
-		ESP-ROM:esp32s3-20210327
-		Build:Mar 27 2021
-		rst:0x1 (POWERON),boot:0x8 (SPI_FAST_FLASH_BOOT)
-		SPIWP:0xee
-		mode:DIO, clock div:1
-		load:0x3fce3808,len:0x4bc
-		load:0x403c9700,len:0xbd8
-		load:0x403cc700,len:0x2a0c
-		entry 0x403c98d0
-		[   105][I][esp32-hal-psram.c:96] psramInit(): PSRAM enabled
-		[   126][I][main.cpp:12] setup(): [main] setup started.
-
+	```
+	--- Terminal on COM7 | 115200 8-N-1
+	--- Available filters and text transformations: colorize, debug, default, direct, esp32_exception_decoder, hexlify, log2file, nocontrol, printable, send_on_enter, time
+	--- More details at https://bit.ly/pio-monitor-filters
+	--- Quit: Ctrl+C | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
+	ESP-ROM:esp32s3-20210327
+	Build:Mar 27 2021
+	rst:0x1 (POWERON),boot:0x8 (SPI_FAST_FLASH_BOOT)
+	SPIWP:0xee
+	mode:DIO, clock div:1
+	load:0x3fce3808,len:0x4bc
+	load:0x403c9700,len:0xbd8
+	load:0x403cc700,len:0x2a0c
+	entry 0x403c98d0
+	[   105][I][esp32-hal-psram.c:96] psramInit(): PSRAM enabled
+	[   126][I][main.cpp:12] setup(): [main] setup started.
+	```
+	
 ### 6. Setup LovyanGFX Display Driver
 
 modify the `main.cpp` file in the following ways:
@@ -197,7 +203,8 @@ modify the `main.cpp` file in the following ways:
 	#include <LovyanGFX.hpp>
 	#include <lgfx/v1/platforms/esp32s3/Panel_RGB.hpp>
 	#include <lgfx/v1/platforms/esp32s3/Bus_RGB.hpp>
-	#include <driver/i2c.h>```
+	#include <driver/i2c.h>
+	```
 
 2. below the TAG variable, add the LGFX class declaration specific to the device:
 	```cpp
@@ -300,28 +307,32 @@ modify the `main.cpp` file in the following ways:
 
 			setPanel(&_panel_instance);
 		}
-	};```
+	};
+	```
 
 3. below the LGFX class, use it to declare the gfx variable:
 	```cpp
-	LGFX gfx;	```
+	LGFX gfx;
+	```
 
 4. below the "setup started." log message within `setup()`, add the following lines to setup GFX and use of the display:
 	```cpp
 	ESP_LOGI(TAG, "starting LovyanGFX %d.%d.%d display...", LGFX_VERSION_MAJOR, LGFX_VERSION_MINOR, LGFX_VERSION_PATCH);
 	gfx.begin();
 	gfx.initDMA();
-	gfx.setBrightness(128);                  // adjust as desired (1-255)
-	gfx.setCursor(0, 0);                        // optional
+	gfx.setBrightness(128);           // adjust as desired (1-255)
+	gfx.setCursor(0, 0);              // optional
 	gfx.setTextColor(0xFFFF, 0x0000); // optional
-	gfx.setTextSize(1);                         // optional
-	gfx.setTextWrap(false);                 // optional
-	ESP_LOGI(TAG, "display started.");```
+	gfx.setTextSize(1);               // optional
+	gfx.setTextWrap(false);           // optional
+	ESP_LOGI(TAG, "display started.");
+	```
 
 5. **Test Display.** below the "display started." log entry within `setup()`, add the following two lines of test code, compile and upload the firmware to our device.  we should observe three (3) changes, the log entry "display started" in the serial monitor, a red rectangle in the middle of the display, and the text "hello, world." in the upper left corner.  once tested, remove the two test lines of code from the bottom of `setup()`.
 	```cpp
 	gfx.fillRect(200, 120, 400, 240, 0xF800);
-	gfx.println("hello, world.");```
+	gfx.println("hello, world.");
+	```
 
 6. **Test Touch.** within the `loop()` function, add the following lines of test code, compile and upload the firmware to our device.  as we touch the display, we should observe log entries in the serial monitor telling us the location of the touches.  once tested, remove these test lines of code from the `loop()` function.
 	```cpp
@@ -330,20 +341,23 @@ modify the `main.cpp` file in the following ways:
 	if (touched)
 	{
 		ESP_LOGI(TAG, "display touched at: %d, %d.", touchX, touchY);
-	}```
+	}
+	```
 
 ### 6. Setup LvGL Library
 
 1. to the top of `main.cpp`, add the #includes of the LvGL library:
 	```cpp
-	#include <lvgl.h>```
+	#include <lvgl.h>
+	```
 
 2. below the `gfx` variable declaration above `setup()`, add the following variables to define our display, touch and buffer configurations.
 	```cpp
 	#define _LV_DISP_DRAW_BUF_SIZE (gfx.width() * gfx.height() * sizeof(lv_color_t) / 8)
 	lv_color_t *lv_buffer[2];
 	lv_display_t *lv_display;
-	lv_indev_t *lv_input;```
+	lv_indev_t *lv_input;
+	```
 
 3. declare the "buffer flush" callback used by LvGL to write content to the display.  above `setup()` add the following `my_disp_flush()` function:
 	```cpp
@@ -355,13 +369,14 @@ modify the `main.cpp` file in the following ways:
 			gfx.startWrite();
 		}
 		gfx.pushImageDMA(area->x1,
-	                                     area->y1,
-	                                     area->x2 - area->x1 + 1,
-	                                     area->y2 - area->y1 + 1,
-	                                     buf16);
+	                     area->y1,
+	                     area->x2 - area->x1 + 1,
+	                     area->y2 - area->y1 + 1,
+	                     buf16);
 		gfx.endWrite();
 		lv_disp_flush_ready(disp);
-	}```
+	}
+	```
 
 3. allocate the draw buffers, and initialize and register the display driver with LvGL.  add the following lines to the bottom of `setup()`:
 	```cpp
@@ -378,7 +393,8 @@ modify the `main.cpp` file in the following ways:
 	lv_display = lv_display_create(gfx.width(), gfx.height());
 	lv_display_set_color_format(lv_display, LV_COLOR_FORMAT_RGB565_SWAPPED);
 	lv_display_set_flush_cb(lv_display, my_disp_flush);
-	lv_display_set_buffers(lv_display, lv_buffer[0], lv_buffer[1], _LV_DISP_DRAW_BUF_SIZE, LV_DISPLAY_RENDER_MODE_PARTIAL);```
+	lv_display_set_buffers(lv_display, lv_buffer[0], lv_buffer[1], _LV_DISP_DRAW_BUF_SIZE, LV_DISPLAY_RENDER_MODE_PARTIAL);
+	```
 
 5. declare the "touch read" callback used by LvGL to know when and where the display was touched.  above `setup()` add the following `my_touchpad_read()` function:
 	```cpp
@@ -402,7 +418,8 @@ modify the `main.cpp` file in the following ways:
 			data->point.x = touchX;
 			data->point.y = touchY;
 		}
-	}```
+	}
+	```
 
 6. initialize and register the input driver with LvGL.  add the following lines to the bottom of `setup()`:
 	```cpp
