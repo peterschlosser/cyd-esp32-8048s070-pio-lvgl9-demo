@@ -39,3 +39,8 @@
 
 # debug information files
 *.dwo
+
+# builds + libdeps + secrets
+.pio/build/
+.pio/libdeps/
+.vscode/
