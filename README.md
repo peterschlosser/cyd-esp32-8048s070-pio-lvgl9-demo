@@ -43,8 +43,7 @@ A simplified PlatformIO project to dispel some of the mystery in setting up the 
 
 ### 3. Modify platformio.ini
 
-modify the `platformio.ini` file in the following ways:
-
+modify the `platformio.ini` file in the following way:
 
 1. Set the serial port monitor speed to `115200`:
 
@@ -102,7 +101,7 @@ modify the `platformio.ini` file in the following ways:
 
 ### 4. Create and Modify lv_conf.h
 
-create and modify the `lv_conf.h` file in the following ways:
+create and modify the `lv_conf.h` file in the following way:
 
 1. Create the `lv_conf.h` file.
 Copy the template file from LvGL library to project Lib folder.
@@ -140,10 +139,11 @@ copy-rename to: `lib/lv_conf.h`
 	#define LV_USE_PERF_MONITOR 1
 	#define LV_USE_MEM_MONITOR 1
 	```
+6. save changes to `lv_conf.h`
 
 ### 5. Enable and Test Serial Logging
 
-modify the `main.cpp` file in the following ways:
+modify the `main.cpp` file in the following way:
 
 1. clean up the default `main.cpp` content and prepare it for our changes to the `setup()` and `loop()` functions.  Use ALT-Shift-F (CMD-Shift-F) to periodically reformat the content.
 	```cpp
@@ -196,7 +196,7 @@ modify the `main.cpp` file in the following ways:
 	
 ### 6. Setup LovyanGFX Display Driver
 
-modify the `main.cpp` file in the following ways:
+modify the `main.cpp` file in the following way:
 
 1. to the top of `main.cpp`, add the #includes of the lovyan driver:
 	```cpp
@@ -378,7 +378,7 @@ modify the `main.cpp` file in the following ways:
 	}
 	```
 
-3. allocate the draw buffers, and initialize and register the display driver with LvGL.  add the following lines to the bottom of `setup()`:
+4. allocate the draw buffers, and initialize and register the display driver with LvGL.  add the following lines to the bottom of `setup()`:
 	```cpp
 	ESP_LOGI(TAG, "starting LvGL %d.%d.%d gui...", LVGL_VERSION_MAJOR, LVGL_VERSION_MINOR, LVGL_VERSION_PATCH);
 	lv_init();
@@ -448,7 +448,7 @@ modify the `main.cpp` file in the following ways:
 	delay(1);
 	```
 
-10. **Test LvGL Function.** add the following two lines of test code to the bottom of setup(), compile and upload the firmware to our device.  we should observe the slider centered in the display, the knob should slide left and right when touched and dragged accordingly.  once tested, remove the two test lines of code from the bottom of setup().
+10. **Test LvGL Function.** add the following two lines of test code to the bottom of `setup()`, compile and upload the firmware to our device.  we should observe the slider centered in the display, the knob should slide left and right when touched and dragged accordingly.  once tested, remove the two test lines of code from the bottom of setup().
 	```cpp
 	lv_obj_t *slider = lv_slider_create(lv_scr_act());
 	lv_obj_align(slider, LV_ALIGN_CENTER, 0, 0);
@@ -476,7 +476,7 @@ these steps are unnecessary if our project does not use the widgets demo.
 	#include "../src/draw/lv_draw_triangle.h"
 	```
 
-5. modify `main.cpp` to draw the demo content.  add the following lines to the botton of `setup()`:
+5. modify `main.cpp` to draw the demo content.  add the following lines to the bottom of `setup()`:
 	```cpp
 	lv_demo_widgets();
 	ESP_LOGI(TAG, "gui started.");

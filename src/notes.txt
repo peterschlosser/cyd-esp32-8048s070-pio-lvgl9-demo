@@ -28,7 +28,7 @@ Setup Procedure
 
 2.4 Install the Lovyan GFX 1.2.7 (or newer) Library within PlatformIO
 
-3. Modify platformio.ini in the following ways:
+3. Modify platformio.ini in the following way:
 
 3.1 set the serial port monitor speed to 115200:
     [env:sunton_s3]
@@ -81,7 +81,7 @@ Setup Procedure
 
 3.4 save changes to platformio.ini
 
-4. Create and modify the lv_conf.h file in the following ways:
+4. Create and modify the lv_conf.h file in the following way:
 
 4.1 Copy the template file from LvGL library to project lib folder.  
     Copy from: .pio/libdeps/sunton_s3/lvgl/lv_conf_template.h and copy-rename to: lib/lv_conf.h
@@ -110,7 +110,9 @@ Setup Procedure
     #define LV_USE_PERF_MONITOR 1
     #define LV_USE_MEM_MONITOR 1
 
-5. enable and test serial monitoring of log messages.  modify the main.cpp file in the following ways:
+4.6 save changes to lv_conf.h
+
+5. enable and test serial monitoring of log messages.  modify the main.cpp file in the following way:
 
 5.1 clean up the default main.cpp content and prepare it for our changes to the setup() and loop() functions.  use ALT-Shift-F (CMD-Shift-F) to periodically reformat the content.
     #include <Arduino.h>
@@ -155,7 +157,7 @@ Setup Procedure
     [   105][I][esp32-hal-psram.c:96] psramInit(): PSRAM enabled
     [   126][I][main.cpp:12] setup(): [main] setup started.
 
-6. setup and test the LovyanGFX driver for our device.  modify the main.cpp file in the following ways:
+6. setup and test the LovyanGFX driver for our device.  modify the main.cpp file in the following way:
 
 6.1 to the top of main.cpp, add the #includes of the lovyan driver:
     #include <LovyanGFX.hpp>
